@@ -86,6 +86,7 @@ functions:
           path: todos
           cors: true
           auth: Auth
+          
     iamRoleStatements:
       - Effect: Allow
         Action:
