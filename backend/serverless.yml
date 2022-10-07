@@ -28,7 +28,10 @@ provider:
     ATTACHMENT_S3_BUCKET: serverless-todo-images-${self:provider.stage}
     SIGNED_URL_EXPIRATION: 300
     AUTH_O_JWKS_URL: https://dev-onnztqbc.us.auth0.com/
+functions:
 
+  Auth:
+    handler: src/lambda/auth/auth0Authorizer.handler
   
   GetTodos:
     handler: src/lambda/http/getTodos.handler
