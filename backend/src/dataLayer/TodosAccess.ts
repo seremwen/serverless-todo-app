@@ -5,18 +5,20 @@ import { DocumentClient } from 'aws-sdk/clients/dynamodb'
 import { TodoItem } from '../models/TodoItem'
 import { TodoUpdate } from '../models/TodoUpdate'
 import { createLogger } from '../utils/logger'
+import * as AWS from 'aws-sdk'
+// import * as AWSXRay from 'aws-xray-sdk'
+
+
+const AWSXRay = require('aws-xray-sdk')
+const XAWS = AWSXRay.captureAWS(AWS)
 
 const logger = createLogger('todosAccess')
-
-// const XAWS = AWSXRay.captureAWS(AWS)
-const XAWS = require('aws-xray-sdk')
-
 export class TodosAccess {
 
   constructor(
     private readonly docClient: DocumentClient = new XAWS.DynamoDB.DocumentClient(),
     private readonly todosTable = process.env.TODOS_TABLE,
-    private readonly todosByUserIndex = process.env.TODOS_BY_USER_INDEX
+    // private readonly todosByUserIndex = process.env.TODOS_BY_USER_INDEX
   ) {}
 
   async todoItemExists(todoId: string): Promise<boolean> {
@@ -29,16 +31,16 @@ export class TodosAccess {
 
     const result = await this.docClient.query({
       TableName: this.todosTable,
-      IndexName: this.todosByUserIndex,
-      KeyConditionExpression: 'userId = :userId',
+      // IndexName: this.todosByUserIndex,
+      KeyConditionExpression: 'todoId = :todoId',
       ExpressionAttributeValues: {
-        ':userId': userId
+        ':todoId': userId
       }
     }).promise()
-
+    logger.info("Todo's retrieved successfully")
     const items = result.Items
 
-    logger.info(`Found ${items.length} todos for user ${userId} in ${this.todosTable}`)
+    // logger.info(`Found ${items.length} todos for user ${userId} in ${this.todosTable}`)
 
     return items as TodoItem[]
   }
