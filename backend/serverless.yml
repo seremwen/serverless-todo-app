@@ -105,7 +105,7 @@ functions:
           auth: Auth
           request:
             schemas:
-              application/json: ${file(models/update-todo-model.json)}
+              application/json: ${file(models/update-todo-request.json)}
     iamRoleStatements:
       - Effect: Allow
         Action:
