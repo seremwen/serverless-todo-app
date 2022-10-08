@@ -56,7 +56,7 @@ export class Todos extends React.PureComponent<TodosProps, TodosState> {
         newTodoName: ''
       })
     } catch {
-      alert('Todo creation failed: check if Your data is Valid')
+      alert('Todo creation failed: check if Your data is Valid:minimum length should 2 and max 200')
     }
   }
 
