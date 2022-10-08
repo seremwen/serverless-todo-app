@@ -1,7 +1,7 @@
 /**
  * A payload of a JWT token
  */
-export interface JwtPayload {
+ export interface JwtPayload {
   iss: string
   sub: string
   iat: number
